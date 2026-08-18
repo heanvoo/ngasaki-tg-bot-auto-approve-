@@ -3,7 +3,7 @@ import logging
 from aiogram import Bot, Dispatcher
 from aiogram.types import ChatJoinRequest
 
-API_TOKEN = '8638681791:AAGH2Ll2URmCY7te-KZZleQ0J8WeTieQ9y4'
+API_TOKEN = '8958144806:AAE03meaypnYUy0GA7NIl_snAop0d6PiZ2w'
 
 # Включаем логирование
 logging.basicConfig(level=logging.INFO)
