@@ -30,7 +30,7 @@ async def approve_request(req: ChatJoinRequest):
     try:
         await bot.send_message(
             chat_id=user_id,
-            text="Заявка принята, удачного использования Ngasaki Visuals!"
+            text="Заявка принята, удачного использования Nagasaki Visuals!"
         )
         logging.info(f"УСПЕХ: Сообщение отправлено пользователю {user_id}")
     except Exception as e:
