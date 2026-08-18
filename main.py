@@ -1,30 +1,38 @@
 import asyncio
+import logging
 from aiogram import Bot, Dispatcher
 from aiogram.types import ChatJoinRequest
 
 API_TOKEN = '8638681791:AAGH2Ll2URmCY7te-KZZleQ0J8WeTieQ9y4'
+
+# Включаем логирование
+logging.basicConfig(level=logging.INFO)
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher()
 
 @dp.chat_join_request()
 async def approve_request(req: ChatJoinRequest):
-    # Принимаем заявку в канал
+    # 1. Принимаем заявку
     await req.approve()
-    
-    # Отправляем сообщение пользователю в ЛС
+    logging.info(f"Заявка от {req.from_user.id} принята")
+
+    # Небольшая пауза перед отправкой ЛС
+    await asyncio.sleep(0.5)
+
+    # 2. Отправляем сообщение
     try:
         await bot.send_message(
             chat_id=req.from_user.id,
             text="Заявка принята, удачного использования Ngasaki Visuals!"
         )
-    except Exception:
-        # Исключение сработает, если пользователь заблокировал бота или никогда не запускал его
-        pass
+        logging.info(f"Сообщение успешно отправлено {req.from_user.id}")
+    except Exception as e:
+        logging.error(f"Не удалось отправить сообщение {req.from_user.id}: {e}")
 
 async def main():
     await bot.delete_webhook(drop_pending_updates=True)
-    await dp.start_polling(bot)
+    await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 
 if __name__ == '__main__':
     asyncio.run(main())
